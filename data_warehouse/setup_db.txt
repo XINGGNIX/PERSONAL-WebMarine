@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS car_sales;
+USE car_sales;
+
+SET @current_year = YEAR(CURDATE());
+
+CREATE TABLE IF NOT EXISTS model_brand(
+    brand_model_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    brand VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    CONSTRAINT uniq_brand_model UNIQUE(brand, model)
+);
+
+CREATE TABLE IF NOT EXISTS car(
+    id VARCHAR(15) PRIMARY KEY,
+    year INTEGER NOT NULL,
+    brand_model_id INTEGER NOT NULL,
+    description VARCHAR(100),
+    price INTEGER,
+    odometer INTEGER,
+    bodytype VARCHAR(50),
+    cylinder INTEGER,
+    volume DOUBLE,
+    turbo BOOL,
+    fueltype VARCHAR(10),
+    hybrid BOOL,
+    electric BOOL,
+    state VARCHAR(3),
+    url VARCHAR(200),
+    FOREIGN KEY (brand_model_id) REFERENCES model_brand(brand_model_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT ck_year_value CHECK (year >= 2000),
+    CONSTRAINT ck_price_value CHECK (price >= 1000),
+    CONSTRAINT ck_odometer_value CHECK (odometer >= 0),
+    CONSTRAINT ck_bodytype_value CHECK (bodytype IN ('suv', 'coupe', 'wagon', 'ute', 'van', 'hatch', 'people mover', NULL, 'sedan', 'cab chassis', 'convertible')),
+    CONSTRAINT ck_fueltype_value CHECK (fueltype IN ('diesel', 'petrol', NULL)),
+    CONSTRAINT ck_state_value CHECK (state IN ('NSW', 'ACT', 'WA', 'QLD', 'VIC', 'SA', 'NT', 'TAS'))
+);

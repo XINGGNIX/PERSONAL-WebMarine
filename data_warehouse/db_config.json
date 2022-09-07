@@ -1,0 +1,18 @@
+{
+    "sql_cmd": {
+        "create_db": "CREATE DATABASE IF NOT EXISTS car_sales;",
+        "drop_db": "DROP DATABASE car_sales;",
+        "insert_brand_model": "INSERT INTO model_brand(brand, model) VALUES ({values});",
+        "select_brand_model": "SELECT brand_model_id, brand, model FROM car_sales.model_brand;",
+        "select_brand": "SELECT DISTINCT(brand) FROM car_sales.model_brand;"
+    },
+    "sql_file": {
+        "setup_db": "./data_warehouse/setup_db.txt"
+    },
+    "db_conf": {
+        "host":"localhost",
+        "user":"root",
+        "port":"3306",
+        "engine":"mysql+pymysql://{user}:{password}@{host}:{port}/car_sales"
+    }
+}
